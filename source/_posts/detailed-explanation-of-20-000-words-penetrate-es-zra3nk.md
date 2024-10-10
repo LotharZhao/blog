@@ -11,7 +11,7 @@ toc: true
 
 ---
 
-* 2 万字详解，吃透 ES！ - 微信公众平台
+* 2 万字详解，吃透 ES！ - 微信公众平台1111
 * [https://mp.weixin.qq.com/s/m7TZ6ljpNtc1b6yAnrT5TA](https://mp.weixin.qq.com/s/m7TZ6ljpNtc1b6yAnrT5TA)
 * ES 常见知识点总结！
 * 2024-09-25 08:59:33
@@ -111,7 +111,7 @@ Javascript  |       |        |   X
 
 我们将上面的内容转换为图的形式来说明倒排索引的结构信息，如下图所示：
 
-​![图片](https://raw.githubusercontent.com/LotharZhao/blog/main/images/640-20240925085934-i0xozf4.webp)​
+​![图片](assets/640-20240925085934-i0xozf4.webp)​
 
 其中主要有如下几个核心术语需要理解：
 
@@ -220,7 +220,7 @@ node.data: true    //是否数据节点
 
 主节点负责创建索引、删除索引、跟踪哪些节点是群集的一部分，并决定哪些分片分配给相关的节点、追踪集群中节点的状态等，稳定的主节点对集群的健康是非常重要的。
 
-​![图片](https://raw.githubusercontent.com/LotharZhao/blog/main/images/640-20240925085934-m8e0mvo.webp)​
+​![图片](assets/640-20240925085934-m8e0mvo.webp)​
 
 一个节点既可以是候选主节点也可以是数据节点，但是由于数据节点对 CPU、内存核 I/O 消耗都很大。
 
@@ -294,7 +294,7 @@ ES 为了提高写入的能力这个过程是并发写的，同时为了解决�
 
 一旦所有的副本分片都报告写成功才会向协调节点报告成功，协调节点向客户端报告成功。
 
-​![图片](https://raw.githubusercontent.com/LotharZhao/blog/main/images/640-20240925085934-o90gil5.webp "图片")​
+​![图片](assets/640-20240925085934-o90gil5.webp "图片")​
 
 从上图可以看出为了达到高可用，Master 节点会避免将主分片和副本分片放在同一个节点上。
 
@@ -330,7 +330,7 @@ ES 为了提高写入的能力这个过程是并发写的，同时为了解决�
 
 ES（v6.8）中字段数据类型主要有以下几类：
 
-​![图片](https://raw.githubusercontent.com/LotharZhao/blog/main/images/640-20240925085934-z792g1s.webp)​
+​![图片](assets/640-20240925085934-z792g1s.webp)​
 
 Text 用于索引全文值的字段，例如电子邮件正文或产品说明。这些字段是被分词的，它们通过分词器传递 ，以在被索引之前将字符串转换为单个术语的列表。
 
@@ -385,7 +385,7 @@ Elasticsearch 是使用 Java 构建，所以除了注意 ELK 技术的版本统�
 
 ### 安装使用
 
-​![图片](https://raw.githubusercontent.com/LotharZhao/blog/main/images/640-20240925085934-3k2kxs1.webp "图片")​
+​![图片](assets/640-20240925085934-3k2kxs1.webp "图片")​
 
 ①下载和解压 Elasticsearch，无需安装解压后即可用，解压后目录如上图：
 
@@ -471,7 +471,7 @@ ES 的基本概念和基本操作介绍完了之后，我们可能还有很多�
 
 下图描述了 3 个节点的集群，共拥有 12 个分片，其中有 4 个主分片（S0、S1、S2、S3）和 8 个副本分片（R0、R1、R2、R3），每个主分片对应两个副本分片，节点 1 是主节点（Master 节点）负责整个集群的状态。
 
-​![图片](https://raw.githubusercontent.com/LotharZhao/blog/main/images/640-20240925085934-3obc2mr.webp)​
+​![图片](assets/640-20240925085934-3obc2mr.webp)​
 
 写索引是只能写在主分片上，然后同步到副本分片。这里有四个主分片，一条数据 ES 是根据什么规则写到特定分片上的呢？
 
@@ -497,7 +497,7 @@ Routing 通过 Hash 函数生成一个数字，然后这个数字再除以 `numb
 
 在一个写请求被发送到某个节点后，该节点即为前面说过的协调节点，协调节点会根据路由公式计算出需要写到哪个分片上，再将请求转发到该分片的主分片节点上。
 
-​![图片](https://raw.githubusercontent.com/LotharZhao/blog/main/images/640-20240925085934-u68qwqn.webp)​
+​![图片](assets/640-20240925085934-u68qwqn.webp)​
 
 假如此时数据通过路由计算公式取余后得到的值是 `shard=hash(routing)%4=0`​。
 
@@ -590,7 +590,7 @@ Tips：尽管刷新是比提交轻量很多的操作，它还是会有性能开�
 
 为了避免丢失数据，Elasticsearch 添加了事务日志（Translog），事务日志记录了所有还没有持久化到磁盘的数据。
 
-​![图片](https://raw.githubusercontent.com/LotharZhao/blog/main/images/640-20240925085934-7fud2t7.webp "图片")​
+​![图片](assets/640-20240925085934-7fud2t7.webp "图片")​
 
 添加了事务日志后整个写索引的流程如上图所示：
 
@@ -614,7 +614,7 @@ Elasticsearch 通过在后台定期进行段合并来解决这个问题。小的
 
 段合并的时候会将那些旧的已删除文档从文件系统中清除。被删除的文档不会被拷贝到新的大段中。合并的过程中不会中断索引和搜索。
 
-​![图片](https://raw.githubusercontent.com/LotharZhao/blog/main/images/640-20240925085934-b9c583w.webp "图片")​
+​![图片](assets/640-20240925085934-b9c583w.webp "图片")​
 
 段合并在进行索引和搜索时会自动进行，合并进程选择一小部分大小相似的段，并且在后台将它们合并到更大的段中，这些段既可以是未提交的也可以是已提交的。
 
@@ -640,7 +640,7 @@ Elasticsearch 在默认情况下会对合并流程进行资源限制，所以搜
 
 ### 内部索引优化
 
-​![图片](https://raw.githubusercontent.com/LotharZhao/blog/main/images/640-20240925085934-i25y94e.webp "图片")​
+​![图片](assets/640-20240925085934-i25y94e.webp "图片")​
 
 Elasticsearch 为了能快速找到某个 Term，先将所有的 Term 排个序，然后根据二分法查找 Term，时间复杂度为 logN，就像通过字典查找一样，这就是 Term Dictionary。
 
@@ -682,7 +682,7 @@ JVM 调优建议如下：
 
 欢迎加入我的[知识星球](https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA **&mid=2247519201&idx=1&sn=b910e72ec34a1447ecece7e993bc977d&chksm=cea1c42af9d64d3c69ba4849fc9175b26a2219d67c2aa6dabb7b73d95f4c41b8a9461e818243&token=1878783075&lang=zh_CN&scene=21#wechat_redirect)获取更多面试干货，[《Java 面试指北》](https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA** &mid=2247519384&idx=1&sn=bc7e71af75350b755f04ca4178395b1a&chksm=cea1c353f9d64a458f797696d4144b4d6e58639371a4612b8e4d106d83a66d2289e7b2cd7431&token=660789642&lang=zh_CN&scene=21#wechat_redirect)持续更新完善中！
 
-​![图片](https://raw.githubusercontent.com/LotharZhao/blog/main/images/640-20240925085934-9m5sbsc.webp "《Java 面试指北》目录")​
+​![图片](assets/640-20240925085934-9m5sbsc.webp "《Java 面试指北》目录")​
 
 **近期文章精选** ：
 
